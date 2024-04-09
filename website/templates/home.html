@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content %}
+<h1 align="center">Chatbot</h1>
+
+<!-- Displaying the response without any label -->
+{% if response %}
+    <p>{{ response }}</p>
+{% endif %}
+
+<div class="chat-box" id="chat">
+    {% for message in user.messages %}
+    <p class="chat-message">
+        {{ message.content }}
+    </p>
+    {% endfor %}
+</div>
+
+<form method="POST">
+    <textarea name="user_input" id="user_input" class="form-control"></textarea>
+    <br />
+    <div align="center">
+        <button type="submit" class="btn btn-primary">Send</button>
+    </div>
+</form>
+{% endblock %}

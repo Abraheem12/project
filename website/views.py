@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request 
+from flask import Blueprint, render_template, request, flash, session, redirect, url_for
 from flask_login import login_required, current_user
 import openai
 import os
@@ -19,11 +19,15 @@ def chatWithGPT(prompt):
 
 
 @views.route('/', methods=['GET', 'POST'])
+@login_required
 def home():
-    user_input = None
-    response = None
     if request.method == 'POST':
-        user_input = request.form.get('user_input')
-        # Process the user_input with your chatbot here...
+        user_input = request.form['user_input']
         response = chatWithGPT(user_input)
-    return render_template('home.html', user=current_user, user_input=user_input, response=response)
+        session['response'] = response
+        return redirect(url_for('views.home'))  # Redirect to the same page
+
+    user_name = current_user.first_name if current_user else "User"
+    response = session.pop('response', f'Hello {
+                           user_name}, how can I help you today?')
+    return render_template("home.html", user=current_user, response=response)

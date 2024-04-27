@@ -1,4 +1,0 @@
-# .gitignore content
-*.log
-node_modules/
-.env

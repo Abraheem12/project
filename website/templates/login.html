@@ -1,16 +1,25 @@
-{% extends "base.html" %} {% block title %}Login{% endblock %}
-{% block content %}
+{% extends "base.html" %} <!-- Extending the base template -->
+
+{% block title %}Login{% endblock %} <!-- Setting the page title -->
+
+{% block content %} <!-- Starting the content block -->
+
+<!-- Start of the login form -->
 <form method="POST">
-    <h3 align="center">ChatBot</h3>
+    <h3 align="center">ChatBot</h3> <!-- Form heading -->
+    <!-- Email input field -->
     <div class = "form-group">
         <label for="email">Email Address</label>
         <input type = "email" class = "form-control" id="email" name="email" placeholder="Enter email"/>
     </div>
+    <!-- Password input field -->
     <div class = "form-group">
         <label for="password">Password</label>
         <input type = "password" class = "form-control" id="password" name="password" placeholder="Enter password"/>
     </div>
+    <!-- Submit button -->
     <br />
     <button type="submit" class = "btn btn-primary">Login</button>
 </form>
-{% endblock %}
+
+{% endblock %} <!-- Ending the content block -->

@@ -1,30 +1,87 @@
-{% extends "base.html" %}
+{% extends "base.html" %} <!-- Extending the base template -->
 
 {% block title %}
 Home
 {% endblock %}
 
-{% block content %}
-<h1 align="center">Chatbot</h1>
+{% block content %} <!-- Content of the page starts here -->
+
+<!-- Inline CSS for styling the page -->
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    .chat-box {
+        width: 80%;
+        height: 400px;
+        margin: 0 auto;
+        border: 1px solid #ccc;
+        padding: 10px;
+        overflow-y: auto;
+        background-color: #e9e9e9;
+    }
+
+    .chat-message {
+        margin-bottom: 10px;
+        padding: 5px;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+
+    form {
+        width: 80%;
+        margin: 20px auto;
+    }
+
+    textarea {
+        width: 100%;
+        height: 100px;
+    }
+
+    button {
+        margin-top: 10px;
+    }
+</style>
+
+<h1 align="center">Chatbot</h1> <!-- Title of the page -->
 
 <!-- Displaying the response without any label -->
 {% if response %}
-    <p>{{ response }}</p>
+    <p>{{ response }}</p> <!-- Displaying the response if it exists -->
 {% endif %}
 
+<!-- Chat box displaying the chat history -->
 <div class="chat-box" id="chat">
-    {% for message in user.messages %}
+    {% for message in chat_history %} <!-- Looping through each message in the chat history -->
     <p class="chat-message">
-        {{ message.content }}
+        User: {{ message.user }}<br> <!-- Displaying the user's message -->
+        Bot: {{ message.bot }} <!-- Displaying the bot's message -->
     </p>
     {% endfor %}
 </div>
 
-<form method="POST">
-    <textarea name="user_input" id="user_input" class="form-control"></textarea>
+<!-- Form for sending a new message -->
+<form id="chat-form" method="POST">
+    <textarea name="user_input" id="user_input" class="form-control"></textarea> <!-- Textarea for the user's input -->
     <br />
     <div align="center">
-        <button type="submit" class="btn btn-primary">Send</button>
+        <button type="submit" class="btn btn-primary">Send</button> <!-- Button to submit the form -->
     </div>
 </form>
-{% endblock %}
+
+<!-- JavaScript to scroll to the bottom of the chat box and to submit the form with the Enter key -->
+<script>
+    window.onload = function () {
+        var chatBox = document.querySelector('.chat-box'); // Selecting the chat box
+        chatBox.scrollTop = chatBox.scrollHeight; // Scrolling to the bottom of the chat box
+    }
+    document.getElementById('user_input').addEventListener('keydown', function (e) { // Listening for the keydown event on the textarea
+        if (e.key == 'Enter' && !e.shiftKey) { // If the key pressed is Enter and the Shift key is not held down
+            e.preventDefault(); // Preventing the default action (creating a new line)
+            document.getElementById('chat-form').submit(); // Submitting the form
+        }
+    });
+</script>
+
+{% endblock %} <!-- Content of the page ends here -->
